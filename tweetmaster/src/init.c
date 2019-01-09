@@ -2,47 +2,38 @@
 
 int main(int argc, char** argv)
 {
-//	char user[32];
-	char pass[32];
-	char c;	
+	char* user = (char*) malloc(sizeof('a')*32);
+	char* pass = (char*) malloc(sizeof('a')*32);
 
 	printf("Username:\t");
-//	fgets(user,32,stdin);
+	gets(user);
 	printf("Password:\t");
-	fgets(pass,32,stdin);
+	gets(pass);
 	
-	int i = 0;
 
-char*	user = "test\ntest\ntest\n";
+	printf("clear && python3 src/tweet_master.py %s %s\n", user,pass);
 
-	for (i = 0; user[i] != '\0';i++)
-	{
-		if (user[i] == '\n')
-		{
-			int j = i;
-			for (j = i+1; user[j] != '\0'; j++)
-			{
-				user[j-1]=user[j];
-			}
-			user[j-1] = user[j];
-			i--;
-		}
-	}
-	print("%s", user);
-//	printf("clear && python3 src/tweet_master.py %s %s", user,pass);
+	char fun[100] = {};
+	
+	functionPrint(user, pass, fun);
 
-//	system(functionPrint(user, pass));
+	system(fun);
+
+	free(user);
+	free(pass);
 
 	return 0;
 }
 
 
-char* functionPrint(char* user, char* pass)
+char* functionPrint(char* user, char* pass, char* function)
 {
-	char* function = "clear && python3 src/tweet_master.py";
+	char* func = "clear && python3 src/tweet_master.py ";
+	strcat(function,func);
 	strcat(function,user);
 	strcat(function, " ");
+printf("%s\n",function);
 	strcat(function,pass);
-
+        printf("%s\n", function);
 	return function;
 }

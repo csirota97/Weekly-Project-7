@@ -6,4 +6,8 @@
 #include <string.h>
 #include <curses.h>
 
-char* functionPrint(char*, char*);
+#define STDIN 0
+#define STDOUT 1
+#define STDERR 2
+
+char* functionPrint(char*, char*, char*);
