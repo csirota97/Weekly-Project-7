@@ -8,6 +8,14 @@ main_menu_options = ["tweet","home","favorite/unfavorite","followers","following
 friends = []
 followers = []
 
+def favorite():
+    tID = input("Tweet ID: ")
+    try:
+        api.CreateFavorite(api.GetStatus(tID))
+        print ("Tweet Favorited\n")
+    except:
+        print ("Already Favorited\n")
+
 def followers():
     followers = api.GetFollowers()
     if followers == []:
@@ -41,8 +49,15 @@ def following():
         print("\nYou are following:\n|" + (max+7+max2)*"-" +"|")
         for u in friends:
             print("| " +u.name + (((max+1)-len(u.name))* " ") + "| @" + u.screen_name+ (max2+2-len(u.screen_name))* " " + "|\n|"+ (max+7+max2)*"-" +"|")
-
     print()
+
+def home():
+    print("\n\nYour Tweets\n")
+    user_posts(None)
+
+def options():
+    print ("\t\tMenu")
+    print (main_menu_options)
 
 def tweet():
 	message = input("\nWhat would you like to say?\n")
@@ -52,6 +67,14 @@ def tweet():
 	if confirm.lower() == 'yes':
 		api.PostUpdates(message)
 		print("Tweet Posted!\n")
+
+def unfavorite():
+    tID = input("Tweet ID: ")
+    try:
+        api.DestroyFavorite(api.GetStatus(tID))
+        print ("Tweet Unfavorited\n")
+    except:
+        print ("Tweet Not Favorited\n")
 
 def user_posts(user):
     statuses = api.GetUserTimeline(user)
@@ -74,33 +97,21 @@ print()
 while True:
     action = input("What would you like to do?\n")
     if action.lower() == "favorite" :
-        tID = input("Tweet ID")
-        try:
-            api.CreateFavorite(api.GetStatus(tID))
-            print ("Tweet Favorited\n")
-        except:
-            print ("Already Favorited\n")
+        favorite()
     elif action.lower() == "followers":
         followers()
     elif action.lower() == "following":
         following()
     elif action.lower() == "home":
-        print("\n\nYour Tweets\n")
-        user_posts(None)
+        home()
     elif action.lower() == "tweet":
         tweet()
     elif action.lower() == "quit":
         exit()
     elif action.lower() == "options":
-        print ("Menu options include")
-        print (main_menu_options)
+        options()
     elif action.lower() == "unfavorite" :
-        tID = input("Tweet ID")
-        try:
-            api.DestroyFavorite(api.GetStatus(tID))
-            print ("Tweet Unfavorited\n")
-        except:
-            print ("Tweet Not Favorited\n")
+        unfavorite()
     else:
         print ("\n****Command not recognized****\nMenu options include")
         print (main_menu_options)
