@@ -16,6 +16,14 @@ def favorite():
     except:
         print ("Already Favorited\n")
 
+
+def favorite2(tID):
+    try:
+        api.CreateFavorite(api.GetStatus(tID))
+        print ("Tweet Favorited\n")
+    except:
+        print ("Already Favorited\n")
+
 def follow():
     try:
         screen_name = input("\nWho would you like to follow?\n")
@@ -24,7 +32,7 @@ def follow():
     except:
         print("User Not Found")
 
-def follow(screen_name):
+def follow2(screen_name):
     try:
         api.CreateFriendship(screen_name=screen_name)
         print(screen_name + " has been followed")
@@ -84,7 +92,7 @@ def tweet():
 		api.PostUpdates(message)
 		print("Tweet Posted!\n")
 
-def tweet(message):
+def tweet2(message):
     confirm = input("\n****Are you sure you would like to tweet:[yes/no]****\n    " + message + "\n")
     
     if confirm.lower() == 'yes':
@@ -99,11 +107,18 @@ def unfavorite():
     except:
         print ("Tweet Not Favorited\n")
 
+def unfavorite2(tID):
+    try:
+        api.DestroyFavorite(api.GetStatus(tID))
+        print ("Tweet Unfavorited\n")
+    except:
+        print ("Tweet Not Favorited\n")
+
 def user():
     screen_name = input("\nWhat is the handle of the user you would like to search? \n")
     user_posts(screen_name)
 
-def user(screen_name):
+def user2(screen_name):
     user_posts(screen_name)
 
 def unfollow():
@@ -114,7 +129,7 @@ def unfollow():
     except:
         print("User Not Found")
 
-def unfollow(screen_name):
+def unfollow2(screen_name):
     try:
         api.DestroyFriendship(screen_name=screen_name)
         print(screen_name + " has been unfollowed")
@@ -148,10 +163,12 @@ while True:
     action = input("What would you like to do?\n")
     if action.lower() == "favorite" :
         favorite()
+    elif action[0:9].lower() == "favorite " :
+        favorite2(action[9:])
     elif action.lower() == "follow":
         follow()
-    elif action[0:6].lower() == "follow":
-        follow(action[7:])
+    elif action[0:7].lower() == "follow ":
+        follow2(action[7:])
     elif action.lower() == "followers":
         followers()
     elif action.lower() == "following":
@@ -160,22 +177,24 @@ while True:
         home()
     elif action.lower() == "tweet":
         tweet()
-    elif action[0:6].lower() == "tweet":
-        tweet(action[7:])
+    elif action[0:6].lower() == "tweet ":
+        tweet2(action[6:])
     elif action.lower() == "quit":
         exit()
     elif action.lower() == "options":
         options()
     elif action.lower() == "unfavorite" :
         unfavorite()
+    elif action[0:11].lower() == "unfavorite " :
+        unfavorite2(action[11:])
     elif action.lower() == "unfollow":
         unfollow()
-    elif action[0:8].lower() == "unfollow":
-        unfollow(action[9:])
+    elif action[0:9].lower() == "unfollow ":
+        unfollow2(action[9:])
     elif action.lower() == "user":
         user()
-    elif action[0:4].lower() == "user":
-        user(action[5:])
+    elif action[0:5].lower() == "user ":
+        user2(action[5:])
     else:
         print ("\n****Command not recognized****\nMenu options include")
         print (main_menu_options)
